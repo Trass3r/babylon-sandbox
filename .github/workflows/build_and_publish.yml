@@ -3,23 +3,22 @@ name: Build and Publish
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
-      - name: Install Dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+          node-version: '18'
+      - run: npm install
+      - run: npm run build
       - name: Publish
+        if: false
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.ITCH_API_KEY }}
